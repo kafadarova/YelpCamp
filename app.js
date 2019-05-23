@@ -1,6 +1,8 @@
 const express = require('express');
 const app = express();
+const bodyParser = require('body-parser');
 
+app.use(bodyParser.urlencoded({extended : true}));
 app.set('view engine', 'ejs');
 
 // render the landing page from views landing template
@@ -19,8 +21,14 @@ app.get('/campgrounds', (req,res) => {
   res.render('campgrounds', {campgrounds: campgrounds});
 });
 
+app.post('/campgrounds', (req,res) => {
+  res.send('You hit the post route');
+  // get data from form and add to campground array
+  // redirect back to campgrounds page
+});
+
 // use port 3000 unless there exists a preconfigured port
-const port = process.env.port || 3000;
+const port = process.env.port || 3001;
 
 app.listen(port,() => {
    console.log('The YelpCamp Server Has Started!');
