@@ -1,9 +1,21 @@
-const express = require('express');
-const app = express();
-const bodyParser = require('body-parser');
+const express    = require('express'),
+      app        = express(),
+      bodyParser = require('body-parser'),
+      mongoose   = require('mongoose');
 
+// connect mongoose
+mongoose.connect('mongodb://localhost/yelp_camp');
 app.use(bodyParser.urlencoded({extended : true}));
 app.set('view engine', 'ejs');
+
+// schema setup
+const campgroundSchema = new mongoose.Schema({
+  name: String,
+  image: String
+});
+
+// make a model 
+const Campground = mongoose.model('Campground', campgroundSchema);
 
 let campgrounds = [
   {name: "Salmon Creek", image: "https://farm9.staticflickr.com/8442/7962474612_bf2baf67c0.jpg"},
