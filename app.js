@@ -34,7 +34,7 @@ app.get('/',(req,res) => {
   res.render('landing');
 });
 
-// camp ground route
+// INDEX campground route - showw all camp ground
 app.get('/campgrounds', (req,res) => {
   //  Get alll campgrounds from DB
     Campground.find({}, function(err, allCampgrounds){
@@ -47,11 +47,12 @@ app.get('/campgrounds', (req,res) => {
     })
 });
 
-// show the form that will send data to the post campgrounds
+// NEW route - show the form that will send data to the post campgrounds
 app.get('/campgrounds/new', (req,res) => {
   res.render('new.ejs');
 });
 
+// CREATE route- add new campground
 app.post('/campgrounds', (req,res) => {
   // get data from form and add to campground array
   let name = req.body.name;
