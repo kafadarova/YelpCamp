@@ -4,7 +4,7 @@ const express    = require('express'),
       mongoose   = require('mongoose');
 
 // connect mongoose
-mongoose.connect('mongodb://localhost/yelp_camp');
+mongoose.connect('mongodb://localhost/yelp_camp', { useNewUrlParser: true });
 app.use(bodyParser.urlencoded({extended : true}));
 app.set('view engine', 'ejs');
 
