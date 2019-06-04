@@ -2,7 +2,11 @@ const express    = require('express'),
       app        = express(),
       bodyParser = require('body-parser'),
       mongoose   = require('mongoose'),
-      Campground = require('./models/campground');
+      Campground = require('./models/campground'),
+      seedDB     = require('./seeds');
+
+// remove all campgrounds from the db
+seedDB();
 
 // connect mongoose
 mongoose.connect('mongodb://localhost/yelp_camp', { useNewUrlParser: true });
