@@ -5,13 +5,13 @@ const express    = require('express'),
       Campground = require('./models/campground'),
       seedDB     = require('./seeds');
 
-// remove all campgrounds from the db
-seedDB();
-
 // connect mongoose
 mongoose.connect('mongodb://localhost/yelp_camp', { useNewUrlParser: true });
 app.use(bodyParser.urlencoded({extended : true}));
 app.set('view engine', 'ejs');
+
+// remove all campgrounds from the db
+seedDB();
 
 // render the landing page from views landing template
 app.get('/',(req,res) => {
