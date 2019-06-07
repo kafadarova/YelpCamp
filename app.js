@@ -3,6 +3,7 @@ const express = require('express'),
   bodyParser = require('body-parser'),
   mongoose = require('mongoose'),
   Campground = require('./models/campground'),
+  Comment = require('./models/comment'),
   seedDB = require('./seeds');
 
 // connect mongoose
@@ -95,7 +96,31 @@ app.get('/campgrounds/:id/comments/new', (req, res) => {
       })
     }
   })
-})
+});
+
+app.post('/campgrounds/:id/comments', (req,res) => {
+  // loookup campground using Id
+  Campground.findById(req.params.id, (err, campground) => {
+    if (err) {
+      console.log(err);
+      res.redirect('/campgrounds');
+    } else {
+      // create new comment 
+      Comment.create(req.body.comment,(err, comment) => {
+        if (err) {
+          console.log(err);
+        } else {
+          // connect new comment to campground
+          campground.comments.push(comment);
+          campground.save();
+          // redirect to campground showpage
+          res.redirect('/campgrounds/' + campground._id);
+        }
+      })
+    }
+  });
+});
+
 // use port 3000 unless there exists a preconfigured port
 const port = process.env.port || 3001;
 
