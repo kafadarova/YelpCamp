@@ -8,7 +8,7 @@ const campgroundSchema = new mongoose.Schema({
   comments: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      red: "Comment"
+      ref: "Comment"
     }
   ]
 });

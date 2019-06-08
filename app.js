@@ -66,9 +66,9 @@ app.get('/campgrounds/new', (req, res) => {
 });
 
 // SHOW - shows more info about one campground
-app.get("/campgrounds/:id", function(req, res) {
+app.get("/campgrounds/:id", (req, res) => {
   //find the campground with provided ID
-  Campground.findById(req.params.id).populate("comments").exec(function(err, foundCampground) {
+  Campground.findById(req.params.id).populate("comments").exec((err, foundCampground) => {
     if (err) {
       console.log(err)
     } else {
