@@ -3,7 +3,7 @@ const express = require('express'),
   bodyParser = require('body-parser'),
   mongoose = require('mongoose'),
   passport = require('passport'),
-  localStrategy = require('passport-local'),
+  LocalStrategy = require('passport-local'),
   Campground = require('./models/campground'),
   Comment = require('./models/comment'),
   User = require('./models/user')
@@ -20,6 +20,19 @@ app.use(express.static(__dirname + '/public'));
 app.set('view engine', 'ejs');
 // remove all campgrounds from the db
 seedDB();
+
+// Passport configuration
+app.use(require('express-session')({
+  secret: "Once again Jerry wins cutest dog!",
+  resave: false,
+  saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 
 // render the landing page from views landing template
 app.get('/', (req, res) => {
