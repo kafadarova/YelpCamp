@@ -165,6 +165,15 @@ app.get('/login', (req,res) => {
   res.render('login');
 })
 
+// handling login logic
+app.post('/login', passport.authenticate('local', 
+    {
+      successRedirect: '/campgrounds',  
+      failureRedirect: '/login'
+    }), (req,res) => {
+      
+});
+
 // use port 3000 unless there exists a preconfigured port
 const port = process.env.port || 3001;
 
