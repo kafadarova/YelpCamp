@@ -160,6 +160,11 @@ app.post('/register', (req,res) => {
   })
 });
 
+// show login form
+app.get('/login', (req,res) => {
+  res.render('login');
+})
+
 // use port 3000 unless there exists a preconfigured port
 const port = process.env.port || 3001;
 
