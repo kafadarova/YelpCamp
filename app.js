@@ -173,6 +173,11 @@ app.post('/login', passport.authenticate('local',
     }), (req,res) => {
       
 });
+// logout route
+app.get('/logout', (req,res) => {
+  req.logout();
+  res.redirect('campgrounds');
+})
 
 // use port 3000 unless there exists a preconfigured port
 const port = process.env.port || 3001;
