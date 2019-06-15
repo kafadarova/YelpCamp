@@ -101,7 +101,7 @@ app.get("/campgrounds/:id", (req, res) => {
 // Comments routers
 // ========
 
-app.get('/campgrounds/:id/comments/new', (req, res) => {
+app.get('/campgrounds/:id/comments/new', isLoggedIn,  (req, res) => {
   // find campground by id
   Campground.findById(req.params.id, (err, campground) => {
     if (err) {
@@ -178,7 +178,12 @@ app.get('/logout', (req,res) => {
   req.logout();
   res.redirect('campgrounds');
 })
-
+ function isLoggedIn(req, res, next){
+   if(req.isAuthenticated()) {
+     return next();
+   }
+   res.direct('/login');
+ }
 // use port 3000 unless there exists a preconfigured port
 const port = process.env.port || 3001;
 
