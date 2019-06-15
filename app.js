@@ -182,7 +182,7 @@ app.get('/logout', (req,res) => {
    if(req.isAuthenticated()) {
      return next();
    }
-   res.direct('/login');
+   res.redirect('/login');
  }
 // use port 3000 unless there exists a preconfigured port
 const port = process.env.port || 3001;
