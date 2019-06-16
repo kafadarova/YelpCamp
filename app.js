@@ -54,9 +54,7 @@ app.get('/campgrounds', (req, res) => {
     } else {
       // campgrounds (name - call wharever we want): campgrounds (data)
       res.render('campgrounds/index', {
-        campgrounds: allCampgrounds,
-        currentUser: req.user
-      });
+        campgrounds: allCampgrounds});
     }
   })
 });
