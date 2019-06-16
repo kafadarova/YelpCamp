@@ -33,13 +33,19 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+// middleware for every single route
+app.use((req,res, next) => {
+  // what is available inside the template
+    res.locals.currentUser = req.user;
+    next();
+});
 
 // render the landing page from views landing template
 app.get('/', (req, res) => {
   res.render('landing');
 });
 
-// INDEX campground route - showw all camp ground
+// INDEX campground route - show all campground
 app.get('/campgrounds', (req, res) => {
   //  Get alll campgrounds from DB
   Campground.find({}, function(err, allCampgrounds) {
@@ -48,7 +54,8 @@ app.get('/campgrounds', (req, res) => {
     } else {
       // campgrounds (name - call wharever we want): campgrounds (data)
       res.render('campgrounds/index', {
-        campgrounds: allCampgrounds
+        campgrounds: allCampgrounds,
+        currentUser: req.user
       });
     }
   })
@@ -114,7 +121,7 @@ app.get('/campgrounds/:id/comments/new', isLoggedIn,  (req, res) => {
   })
 });
 
-app.post('/campgrounds/:id/comments', (req,res) => {
+app.post('/campgrounds/:id/comments',isLoggedIn, (req,res) => {
   // loookup campground using Id
   Campground.findById(req.params.id, (err, campground) => {
     if (err) {
@@ -148,7 +155,7 @@ app.get('/register', (req,res) => {
 
 // handle sign up logic
 app.post('/register', (req,res) => {
-  const newUser = new User({username : req.body.username});
+  let newUser = new User({username : req.body.username});
   User.register(newUser, req.body.password, (err, user) => {
     if (err) {
       console.log(err);
@@ -177,7 +184,8 @@ app.post('/login', passport.authenticate('local',
 app.get('/logout', (req,res) => {
   req.logout();
   res.redirect('campgrounds');
-})
+});
+
  function isLoggedIn(req, res, next){
    if(req.isAuthenticated()) {
      return next();
