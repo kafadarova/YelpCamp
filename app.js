@@ -23,8 +23,8 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(express.static(__dirname + '/public'));
 app.set('view engine', 'ejs');
-// remove all campgrounds from the db
-seedDB();
+// remove all campgrounds from the db and add new one
+// seedDB(); //sedd the db
 
 // Passport configuration
 app.use(require('express-session')({
