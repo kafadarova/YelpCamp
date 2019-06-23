@@ -86,7 +86,18 @@ router.put('/:id', (req,res) => {
     }
   })
   // redirect somewhere (show page)
-})
+});
+
+// destroy campground route
+router.delete('/:id', (req,res) => {
+  Campground.findByIdAndRemove(req.params.id, (err) => {
+    if (err) {
+      res.redirect('/campgrounds');
+    } else {
+      res.redirect('/campgrounds');
+    }
+  })
+});
 // middleware
 function isLoggedIn(req, res, next) {
   if (req.isAuthenticated()) {
