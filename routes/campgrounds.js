@@ -45,7 +45,7 @@ router.post('/', (req, res) => {
 });
 
 // NEW route - show the form that will send data to the post campgrounds
-router.get('/campgrounds/new', isLoggedIn, (req, res) => {
+router.get('/new', isLoggedIn, (req, res) => {
   res.render('campgrounds/new');
 });
 
@@ -56,7 +56,7 @@ router.get("/:id", (req, res) => {
     if (err) {
       console.log(err)
     } else {
-      console.log(foundCampground);
+      // console.log(foundCampground);
       //render show template with that campground
       res.render("campgrounds/show", {
         campground: foundCampground
@@ -66,6 +66,9 @@ router.get("/:id", (req, res) => {
 });
 
 // edit campground route
+router.get('/:id/edit',(req,res) => {
+  res.send('hi');
+});
 // update campground route
 // middleware
 function isLoggedIn(req, res, next) {

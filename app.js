@@ -26,7 +26,7 @@ app.use(express.static(__dirname + '/public'));
 app.use(methodOverride("_method"));
 app.set('view engine', 'ejs');
 // remove all campgrounds from the db and add new one
-// seedDB(); //sedd the db
+ seedDB(); //sedd the db
 
 // Passport configuration
 app.use(require('express-session')({
