@@ -82,7 +82,7 @@ router.put('/:id', (req,res) => {
     if (err) {
       res.redirect('/campgrounds');
     } else {
-      res.redirect('/campgrounds/' + req.params.ids);
+      res.redirect('/campgrounds/' + req.params.id);
     }
   })
   // redirect somewhere (show page)
