@@ -38,7 +38,7 @@ router.post('/',isLoggedIn, (req,res) => {
           // connect new comment to campground
           campground.comments.push(comment);
           campground.save();
-          console.log(comment);
+          // console.log(comment);
           // redirect to campground showpage
           res.redirect('/campgrounds/' + campground._id);
         }
@@ -72,7 +72,19 @@ router.put('/:comment_id', (req,res) => {
       res.redirect('/campgrounds/' + req.params.id);
     }
   })
-})
+});
+
+// Comment Destroy route
+router.delete('/:comment_id', (req,res) => {
+  Comment.findByIdAndRemove(req.params.comment_id, (err) => {
+    if (err) {
+     res.redirect("back");
+    } else {
+     res.redirect('/campgrounds/' + req.params.id);
+    }
+  })
+});
+
 // middleware
 function isLoggedIn(req, res, next) {
   if (req.isAuthenticated()) {
