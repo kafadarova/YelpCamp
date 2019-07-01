@@ -2,6 +2,7 @@ const express = require('express'),
   app = express(),
   bodyParser = require('body-parser'),
   mongoose = require('mongoose'),
+  flash = require('connect-flash'),
   passport = require('passport'),
   LocalStrategy = require('passport-local'),
   methodOverride = require('method-override'),
@@ -25,6 +26,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(express.static(__dirname + '/public'));
 app.use(methodOverride("_method"));
+app.use(flash());
 app.set('view engine', 'ejs');
 // remove all campgrounds from the db and add new one
  seedDB(); //sedd the db
