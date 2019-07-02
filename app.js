@@ -47,6 +47,7 @@ passport.deserializeUser(User.deserializeUser());
 app.use((req,res, next) => {
   // what is available inside the template
     res.locals.currentUser = req.user;
+    res.locals.message = req.flash('error');
     next();
 });
 
