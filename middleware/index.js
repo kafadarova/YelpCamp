@@ -6,7 +6,7 @@ const middlewareObj = {};
 middlewareObj.checkCampgroundOwnership = (req, res, next) => {
   if (req.isAuthenticated()) {
     Campground.findById(req.params.id, (err, foundCampground) => {
-      if (err) {
+      if (err || !foundCampground) {
         req.flash('error', 'Campground not found');
         res.redirect('back');
       } else {
