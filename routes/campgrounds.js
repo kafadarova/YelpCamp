@@ -22,6 +22,7 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
   // get data from form and add to campground array
   let name = req.body.name;
+  let price = req.body.price;
   let image = req.body.image;
   let desc = req.body.description;
   let author = {
@@ -30,6 +31,7 @@ router.post('/', (req, res) => {
   };
   let newCampground = {
     name: name,
+    price: price,
     image: image,
     description: desc,
     author: author
