@@ -55,7 +55,7 @@ app.use((req,res, next) => {
 // using the following routes
 app.use("/",indexRoutes);
 // all routes that start with campgrounds ..
-app.use("/campgrounds/:id/comments", commentRoutes);
+app.use("/campgrounds/:slug/comments", commentRoutes);
 app.use("/campgrounds", campgroundRoutes);
 
 // use port 3000 unless there exists a preconfigured port
