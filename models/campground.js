@@ -9,7 +9,7 @@ const campgroundSchema = new mongoose.Schema({
   slug: {
       type: String,
       unique: true
-  }
+  },
   price: String,
   image: String,
   description: String,
@@ -29,21 +29,23 @@ const campgroundSchema = new mongoose.Schema({
 });
 
 // add a slug before saving the campground
-campgroundSchema.pre('save', async (next) => {
+campgroundSchema.pre('save',  async function (next) {
   try {
     // check if a new campground is being saved, or if the campground name is being modified
       if (this.isNew || this.isModified("name")) {
           this.slug = await generateUniqueSlug(this._id, this.name);
       }
       next();
-  } catch {
+  } catch (err) {
     next(err);
   }
 })
 
 
 // make a model 
-module.exports = mongoose.model('Campground', campgroundSchema);
+const Campground = mongoose.model("Campground", campgroundSchema);
+
+module.exports = Campground;
 
 async function generateUniqueSlug(id, campgroundName, slug) {
     try {
