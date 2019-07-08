@@ -64,8 +64,8 @@ router.get('/:comment_id/edit', middleware.checkCommentOwnership, (req, res) => 
       if (err) {
         res.redirect("back");
       } else {
-        res.render('comments/edit', {
-          campground_id: req.params.id,
+        res.render('comments/edit',  {
+          campground_slug: req.params.slug,
           comment: foundComment
         });
       }
