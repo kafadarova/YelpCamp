@@ -58,7 +58,7 @@ router.get("/:slug", (req, res) => {
   //find the campground with provided ID
   Campground.findOne({
     slug: req.params.slug
-  }).populate("comments").exec((err, foundCampground) => {
+  }).populate("comments likes").exec((err, foundCampground) => {
     if (err || !foundCampground) {
       req.flash("error", "Campground not found");
       res.redirect("back");
@@ -125,14 +125,14 @@ router.delete('/:slug', middleware.checkCampgroundOwnership, (req, res) => {
 router.post("/:slug/like", middleware.isLoggedIn, function(req, res) {
   Campground.findOne({
     slug: req.params.slug
-  }, (err, foundCampground) {
+  }, (err, foundCampground) => {
     if (err) {
       console.log(err);
       return res.redirect("/campgrounds");
     }
     // check if the user has already liked this camoground
-    const foundUserLike = foundCampground.likes.some((like) => {
-      return like.equals(req.user._id);
+    let foundUserLike = foundCampground.likes.some((like) => {
+      return like.equals(req.user._id); // return boolean value and we stored it to the foundUserLike variable
     });
 
     if (foundUserLike) {
@@ -142,6 +142,9 @@ router.post("/:slug/like", middleware.isLoggedIn, function(req, res) {
       // adding the new user like
       foundCampground.likes.push(req.user);
     }
+    
+    // store the campground changes into the db
+    //  redirect the user to the campground show page
     foundCampground.save(function(err) {
       if (err) {
         console.log(err);
