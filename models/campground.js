@@ -10,6 +10,12 @@ const campgroundSchema = new mongoose.Schema({
       type: String,
       unique: true
   },
+  likes: [
+    {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+    }
+  ],
   price: String,
   image: String,
   description: String,
