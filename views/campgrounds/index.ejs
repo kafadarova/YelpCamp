@@ -10,19 +10,25 @@
     </div>
   </header>
   <div class='row text-center' style='display:flex; flex-wrap: wrap;'>
-     <% campgrounds.forEach((campground) => { %>
-         <div class='col-md-3 col-sm-6'>
-             <div class='thumbnail'>
-                <img src='<%= campground.image %>'>
-                <div class='caption'>
-                    <h4><%= campground.name %></h4>
-                </div>
-                <p>
-                  <a href="/campgrounds/<%= campground.slug %>" class='btn btn-primary'>More Info</a>
-                </p>
-             </div>
-         </div>
-     <% }); %>
- </div>
+    <% campgrounds.forEach((campground) => { %>
+    <div class='col-md-3 col-sm-6'>
+      <div class='thumbnail'>
+        <img src='<%= campground.image %>'>
+        <div class='caption'>
+          <h4>
+            <%= campground.name %>
+          </h4>
+        </div>
+        <div>
+          <span class="badge label-primary"><i class="fas fa-thumbs-up"></i>
+            <%= campground.likes.length %></span>
+        </div>
+        <p>
+          <a href="/campgrounds/<%= campground.slug %>" class='btn btn-primary'>More Info</a>
+        </p>
+      </div>
+    </div>
+    <% }); %>
+  </div>
 </div>
 <% include ../partials/footer %>
