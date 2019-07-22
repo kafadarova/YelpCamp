@@ -30,3 +30,32 @@ router.get("/new", middleware.isLoggedIn, middleware.checkReviewExistence, funct
 
     });
 });
+
+router.post("/", middleware.isLoggedIn, middleware.checkReviewExistence, function (req, res) {
+    //lookup campground using ID
+    Campground.findById(req.params.id).populate("reviews").exec(function (err, campground) {
+        if (err) {
+            req.flash("error", err.message);
+            return res.redirect("back");
+        }
+        Review.create(req.body.review, function (err, review) {
+            if (err) {
+                req.flash("error", err.message);
+                return res.redirect("back");
+            }
+            //add author username/id and associated campground to the review
+            review.author.id = req.user._id;
+            review.author.username = req.user.username;
+            review.campground = campground;
+            //save review
+            review.save();
+            campground.reviews.push(review);
+            // calculate the new average review for the campground
+            campground.rating = calculateAverage(campground.reviews);
+            //save campground
+            campground.save();
+            req.flash("success", "Your review has been successfully added.");
+            res.redirect('/campgrounds/' + campground._id);
+        });
+    });
+});
