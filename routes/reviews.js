@@ -60,6 +60,17 @@ router.post("/", middleware.isLoggedIn, middleware.checkReviewExistence, functio
     });
 });
 
+// Reviews Edit
+router.get("/:review_id/edit", middleware.checkReviewOwnership, function (req, res) {
+    Review.findById(req.params.review_id, function (err, foundReview) {
+        if (err) {
+            req.flash("error", err.message);
+            return res.redirect("back");
+        }
+        res.render("reviews/edit", {campground_id: req.params.id, review: foundReview});
+    });
+});
+
 function calculateAverage(reviews) {
     if (reviews.length === 0) {
         return 0;
