@@ -1,12 +1,16 @@
 const express = require('express');
 const router = express.Router();
 const Campground = require('../models/campground');
+const Review = require("../models/review");
 const middleware = require('../middleware');
 
 // INDEX campground route - show all campground
 router.get('/', (req, res) => {
   //  Get alll campgrounds from DB
-  Campground.find({}, function(err, allCampgrounds) {
+  Campground.find().populate("comments").populate({
+        path: "reviews",
+        options: {sort: {createdAt: -1}}
+    }).execfunction(err, allCampgrounds) {
     if (err) {
       console.log(err);
     } else {
