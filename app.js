@@ -13,8 +13,9 @@ const express = require('express'),
 
 // require routes
 const commentRoutes = require('./routes/comments'),
-      campgroundRoutes = require('./routes/campgrounds'),
-      indexRoutes = require('./routes/index');
+      reviewRoutes     = require("./routes/reviews"),
+      campgroundRoutes = require("./routes/campgrounds"),
+      indexRoutes      = require("./routes/index");
        
 // connect mongoose
 mongoose.connect('mongodb://localhost/yelp_camp', {
@@ -57,6 +58,7 @@ app.use("/",indexRoutes);
 // all routes that start with campgrounds ..
 app.use("/campgrounds/:slug/comments", commentRoutes);
 app.use("/campgrounds", campgroundRoutes);
+app.use("/campgrounds/:id/reviews", reviewRoutes);
 
 // use port 3000 unless there exists a preconfigured port
 const port = process.env.port || 3001;
