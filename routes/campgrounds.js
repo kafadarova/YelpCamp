@@ -7,10 +7,12 @@ const middleware = require('../middleware');
 // INDEX campground route - show all campground
 router.get('/', (req, res) => {
   //  Get alll campgrounds from DB
-  Campground.find().populate("comments").populate({
+  Campground.findOne({
+    slug: req.params.slug
+  }).populate("comments").populate({
         path: "reviews",
         options: {sort: {createdAt: -1}}
-    }).execfunction(err, allCampgrounds) {
+      }).exec(function (err, foundCampground) {
     if (err) {
       console.log(err);
     } else {
